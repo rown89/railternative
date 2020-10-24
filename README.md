@@ -1,4 +1,4 @@
-# railternative
+# railternative Flutter App
 
 Home:
 https://www.raiplay.it/index.json
