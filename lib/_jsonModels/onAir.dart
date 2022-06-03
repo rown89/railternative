@@ -9,11 +9,11 @@ OnAir onAirFromJson(String str) => OnAir.fromJson(json.decode(str));
 String onAirToJson(OnAir data) => json.encode(data.toJson());
 
 class OnAir {
-    final List<OnAirElement> onAir;
-
     OnAir({
         this.onAir,
     });
+
+    List<OnAirElement> onAir;
 
     factory OnAir.fromJson(Map<String, dynamic> json) => OnAir(
         onAir: List<OnAirElement>.from(json["on_air"].map((x) => OnAirElement.fromJson(x))),
@@ -25,15 +25,15 @@ class OnAir {
 }
 
 class OnAirElement {
-    final String channel;
-    final TItem currentItem;
-    final TItem nextItem;
-
     OnAirElement({
         this.channel,
         this.currentItem,
         this.nextItem,
     });
+
+    String channel;
+    TItem currentItem;
+    TItem nextItem;
 
     factory OnAirElement.fromJson(Map<String, dynamic> json) => OnAirElement(
         channel: json["channel"],
@@ -49,26 +49,6 @@ class OnAirElement {
 }
 
 class TItem {
-    final String id;
-    final String playlistId;
-    final String name;
-    final String episodeTitle;
-    final String episode;
-    final String season;
-    final String description;
-    final String channel;
-    final Date date;
-    final String hour;
-    final String duration;
-    final String durationInMinutes;
-    final String pathId;
-    final bool hasVideo;
-    final String weblink;
-    final String image;
-    final Program program;
-    final TrackInfo trackInfo;
-    final TechDatetime techDatetime;
-
     TItem({
         this.id,
         this.playlistId,
@@ -91,6 +71,26 @@ class TItem {
         this.techDatetime,
     });
 
+    String id;
+    String playlistId;
+    String name;
+    String episodeTitle;
+    String episode;
+    String season;
+    String description;
+    String channel;
+    Date date;
+    String hour;
+    String duration;
+    String durationInMinutes;
+    String pathId;
+    bool hasVideo;
+    String weblink;
+    String image;
+    Program program;
+    TrackInfo trackInfo;
+    String techDatetime;
+
     factory TItem.fromJson(Map<String, dynamic> json) => TItem(
         id: json["id"],
         playlistId: json["playlist_id"],
@@ -110,7 +110,7 @@ class TItem {
         image: json["image"],
         program: Program.fromJson(json["program"]),
         trackInfo: TrackInfo.fromJson(json["track_info"]),
-        techDatetime: techDatetimeValues.map[json["tech_datetime"]],
+        techDatetime: json["tech_datetime"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -132,29 +132,30 @@ class TItem {
         "image": image,
         "program": program.toJson(),
         "track_info": trackInfo.toJson(),
-        "tech_datetime": techDatetimeValues.reverse[techDatetime],
+        "tech_datetime": techDatetime,
     };
 }
 
-enum Date { THE_07052020, EMPTY }
+enum Date { THE_03062022, THE_04062022, EMPTY }
 
 final dateValues = EnumValues({
     "": Date.EMPTY,
-    "07/05/2020": Date.THE_07052020
+    "03/06/2022": Date.THE_03062022,
+    "04/06/2022": Date.THE_04062022
 });
 
 class Program {
-    final String name;
-    final String pathId;
-    final String infoUrl;
-    final String weblink;
-
     Program({
         this.name,
         this.pathId,
         this.infoUrl,
         this.weblink,
     });
+
+    String name;
+    String pathId;
+    String infoUrl;
+    String weblink;
 
     factory Program.fromJson(Map<String, dynamic> json) => Program(
         name: json["name"],
@@ -171,33 +172,7 @@ class Program {
     };
 }
 
-enum TechDatetime { EMPTY, THE_07052020032314 }
-
-final techDatetimeValues = EnumValues({
-    "": TechDatetime.EMPTY,
-    "07-05-2020 03:23:14": TechDatetime.THE_07052020032314
-});
-
 class TrackInfo {
-    final String id;
-    final Domain domain;
-    final Platform platform;
-    final Type mediaType;
-    final Type pageType;
-    final Domain editor;
-    final Section section;
-    final String subSection;
-    final String programTitle;
-    final String episodeNumber;
-    final Form form;
-    final String title;
-    final String episodeTitle;
-    final String season;
-    final String pathId;
-    final String channel;
-    final String date;
-    final Content content;
-
     TrackInfo({
         this.id,
         this.domain,
@@ -218,6 +193,25 @@ class TrackInfo {
         this.date,
         this.content,
     });
+
+    String id;
+    Domain domain;
+    Platform platform;
+    Type mediaType;
+    Type pageType;
+    Domain editor;
+    Section section;
+    String subSection;
+    String programTitle;
+    String episodeNumber;
+    Form form;
+    String title;
+    String episodeTitle;
+    String season;
+    String pathId;
+    String channel;
+    String date;
+    Content content;
 
     factory TrackInfo.fromJson(Map<String, dynamic> json) => TrackInfo(
         id: json["id"],

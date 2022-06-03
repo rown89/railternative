@@ -9,112 +9,90 @@ IndexPage indexPageFromJson(String str) => IndexPage.fromJson(json.decode(str));
 String indexPageToJson(IndexPage data) => json.encode(data.toJson());
 
 class IndexPage {
-    final String title;
-    final String uniquename;
-    final List<IndexPageContent> contents;
-    final TrackInfo trackInfo;
-
     IndexPage({
         this.title,
         this.uniquename,
+        this.adv,
+        this.noroll,
+        this.nofloorad,
         this.contents,
         this.trackInfo,
     });
 
+    String title;
+    String uniquename;
+    bool adv;
+    bool noroll;
+    bool nofloorad;
+    List<IndexPageContent> contents;
+    TrackInfo trackInfo;
+
     factory IndexPage.fromJson(Map<String, dynamic> json) => IndexPage(
-        title: json["title"] == null ? null : json["title"],
-        uniquename: json["uniquename"] == null ? null : json["uniquename"],
-        contents: json["contents"] == null ? null : List<IndexPageContent>.from(json["contents"].map((x) => IndexPageContent.fromJson(x))),
-        trackInfo: json["track_info"] == null ? null : TrackInfo.fromJson(json["track_info"]),
+        title: json["title"],
+        uniquename: json["uniquename"],
+        adv: json["adv"],
+        noroll: json["noroll"],
+        nofloorad: json["nofloorad"],
+        contents: List<IndexPageContent>.from(json["contents"].map((x) => IndexPageContent.fromJson(x))),
+        trackInfo: TrackInfo.fromJson(json["track_info"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "title": title == null ? null : title,
-        "uniquename": uniquename == null ? null : uniquename,
-        "contents": contents == null ? null : List<dynamic>.from(contents.map((x) => x.toJson())),
-        "track_info": trackInfo == null ? null : trackInfo.toJson(),
+        "title": title,
+        "uniquename": uniquename,
+        "adv": adv,
+        "noroll": noroll,
+        "nofloorad": nofloorad,
+        "contents": List<dynamic>.from(contents.map((x) => x.toJson())),
+        "track_info": trackInfo.toJson(),
     };
 }
 
 class IndexPageContent {
-    final String id;
-    final String name;
-    final String type;
-    final List<ContentContent> contents;
-    final Section section;
-    final Info info;
-    final String useCase;
-    final String mode;
-    final String layout;
-    final String fallbackList;
-
     IndexPageContent({
         this.id,
         this.name,
         this.type,
         this.contents,
+        this.header,
+        this.pathId,
         this.section,
         this.info,
-        this.useCase,
-        this.mode,
-        this.layout,
-        this.fallbackList,
     });
 
+    String id;
+    String name;
+    String type;
+    List<ContentContent> contents;
+    Header header;
+    String pathId;
+    String section;
+    Info info;
+
     factory IndexPageContent.fromJson(Map<String, dynamic> json) => IndexPageContent(
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
-        type: json["type"] == null ? null : json["type"],
+        id: json["id"],
+        name: json["name"],
+        type: json["type"],
         contents: json["contents"] == null ? null : List<ContentContent>.from(json["contents"].map((x) => ContentContent.fromJson(x))),
-        section: json["section"] == null ? null : sectionValues.map[json["section"]],
+        header: json["header"] == null ? null : Header.fromJson(json["header"]),
+        pathId: json["path_id"] == null ? null : json["path_id"],
+        section: json["section"] == null ? null : json["section"],
         info: json["info"] == null ? null : Info.fromJson(json["info"]),
-        useCase: json["use_case"] == null ? null : json["use_case"],
-        mode: json["mode"] == null ? null : json["mode"],
-        layout: json["layout"] == null ? null : json["layout"],
-        fallbackList: json["fallback_list"] == null ? null : json["fallback_list"],
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "type": type == null ? null : type,
+        "id": id,
+        "name": name,
+        "type": type,
         "contents": contents == null ? null : List<dynamic>.from(contents.map((x) => x.toJson())),
-        "section": section == null ? null : sectionValues.reverse[section],
+        "header": header == null ? null : header.toJson(),
+        "path_id": pathId == null ? null : pathId,
+        "section": section == null ? null : section,
         "info": info == null ? null : info.toJson(),
-        "use_case": useCase == null ? null : useCase,
-        "mode": mode == null ? null : mode,
-        "layout": layout == null ? null : layout,
-        "fallback_list": fallbackList == null ? null : fallbackList,
     };
 }
 
 class ContentContent {
-    final String id;
-    final String pathId;
-    final RightsManagement rightsManagement;
-    final Images images;
-    final Layout layout;
-    final String name;
-    final Type type;
-    final String infoUrl;
-    final bool loginRequired;
-    final String weblink;
-    final String programUrl;
-    final String programPathId;
-    final String label;
-    final String description;
-    final String vanity;
-    final String country;
-    final List<Detail> details;
-    final String videoUrl;
-    final bool isLive;
-    final String subtitle;
-    final ProgramName programName;
-    final String durationInMinutes;
-    final String caption;
-    final String subType;
-    final String subId;
-
     ContentContent({
         this.id,
         this.pathId,
@@ -122,6 +100,7 @@ class ContentContent {
         this.images,
         this.layout,
         this.name,
+        this.vanity,
         this.type,
         this.infoUrl,
         this.loginRequired,
@@ -130,18 +109,59 @@ class ContentContent {
         this.programPathId,
         this.label,
         this.description,
-        this.vanity,
         this.country,
         this.details,
+        this.availabilities,
         this.videoUrl,
         this.isLive,
+        this.toptitle,
         this.subtitle,
         this.programName,
         this.durationInMinutes,
+        this.duration,
+        this.season,
+        this.episode,
+        this.episodeTitle,
         this.caption,
+        this.image,
         this.subType,
         this.subId,
+        this.menuPathId,
     });
+
+    String id;
+    String pathId;
+    RightsManagement rightsManagement;
+    Images images;
+    Layout layout;
+    String name;
+    String vanity;
+    Type type;
+    String infoUrl;
+    bool loginRequired;
+    String weblink;
+    String programUrl;
+    String programPathId;
+    String label;
+    String description;
+    String country;
+    List<Detail> details;
+    dynamic availabilities;
+    String videoUrl;
+    bool isLive;
+    String toptitle;
+    Subtitle subtitle;
+    ProgramName programName;
+    String durationInMinutes;
+    String duration;
+    String season;
+    String episode;
+    String episodeTitle;
+    String caption;
+    String image;
+    SubType subType;
+    String subId;
+    String menuPathId;
 
     factory ContentContent.fromJson(Map<String, dynamic> json) => ContentContent(
         id: json["id"] == null ? null : json["id"],
@@ -149,26 +169,34 @@ class ContentContent {
         rightsManagement: json["rights_management"] == null ? null : RightsManagement.fromJson(json["rights_management"]),
         images: json["images"] == null ? null : Images.fromJson(json["images"]),
         layout: json["layout"] == null ? null : layoutValues.map[json["layout"]],
-        name: json["name"] == null ? null : json["name"],
-        type: json["type"] == null ? null : typeValues.map[json["type"]],
+        name: json["name"],
+        vanity: json["vanity"] == null ? null : json["vanity"],
+        type: typeValues.map[json["type"]],
         infoUrl: json["info_url"] == null ? null : json["info_url"],
         loginRequired: json["login_required"] == null ? null : json["login_required"],
-        weblink: json["weblink"] == null ? null : json["weblink"],
+        weblink: json["weblink"],
         programUrl: json["program_url"] == null ? null : json["program_url"],
         programPathId: json["program_path_id"] == null ? null : json["program_path_id"],
         label: json["label"] == null ? null : json["label"],
         description: json["description"] == null ? null : json["description"],
-        vanity: json["vanity"] == null ? null : json["vanity"],
         country: json["country"] == null ? null : json["country"],
         details: json["details"] == null ? null : List<Detail>.from(json["details"].map((x) => Detail.fromJson(x))),
+        availabilities: json["availabilities"],
         videoUrl: json["video_url"] == null ? null : json["video_url"],
         isLive: json["is_live"] == null ? null : json["is_live"],
-        subtitle: json["subtitle"] == null ? null : json["subtitle"],
+        toptitle: json["toptitle"] == null ? null : json["toptitle"],
+        subtitle: json["subtitle"] == null ? null : subtitleValues.map[json["subtitle"]],
         programName: json["program_name"] == null ? null : programNameValues.map[json["program_name"]],
         durationInMinutes: json["duration_in_minutes"] == null ? null : json["duration_in_minutes"],
+        duration: json["duration"] == null ? null : json["duration"],
+        season: json["season"] == null ? null : json["season"],
+        episode: json["episode"] == null ? null : json["episode"],
+        episodeTitle: json["episode_title"] == null ? null : json["episode_title"],
         caption: json["caption"] == null ? null : json["caption"],
-        subType: json["sub_type"] == null ? null : json["sub_type"],
+        image: json["image"] == null ? null : json["image"],
+        subType: json["sub_type"] == null ? null : subTypeValues.map[json["sub_type"]],
         subId: json["sub_id"] == null ? null : json["sub_id"],
+        menuPathId: json["menu_path_id"] == null ? null : json["menu_path_id"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -177,66 +205,62 @@ class ContentContent {
         "rights_management": rightsManagement == null ? null : rightsManagement.toJson(),
         "images": images == null ? null : images.toJson(),
         "layout": layout == null ? null : layoutValues.reverse[layout],
-        "name": name == null ? null : name,
-        "type": type == null ? null : typeValues.reverse[type],
+        "name": name,
+        "vanity": vanity == null ? null : vanity,
+        "type": typeValues.reverse[type],
         "info_url": infoUrl == null ? null : infoUrl,
         "login_required": loginRequired == null ? null : loginRequired,
-        "weblink": weblink == null ? null : weblink,
+        "weblink": weblink,
         "program_url": programUrl == null ? null : programUrl,
         "program_path_id": programPathId == null ? null : programPathId,
         "label": label == null ? null : label,
         "description": description == null ? null : description,
-        "vanity": vanity == null ? null : vanity,
         "country": country == null ? null : country,
         "details": details == null ? null : List<dynamic>.from(details.map((x) => x.toJson())),
+        "availabilities": availabilities,
         "video_url": videoUrl == null ? null : videoUrl,
         "is_live": isLive == null ? null : isLive,
-        "subtitle": subtitle == null ? null : subtitle,
+        "toptitle": toptitle == null ? null : toptitle,
+        "subtitle": subtitle == null ? null : subtitleValues.reverse[subtitle],
         "program_name": programName == null ? null : programNameValues.reverse[programName],
         "duration_in_minutes": durationInMinutes == null ? null : durationInMinutes,
+        "duration": duration == null ? null : duration,
+        "season": season == null ? null : season,
+        "episode": episode == null ? null : episode,
+        "episode_title": episodeTitle == null ? null : episodeTitle,
         "caption": caption == null ? null : caption,
-        "sub_type": subType == null ? null : subType,
+        "image": image == null ? null : image,
+        "sub_type": subType == null ? null : subTypeValues.reverse[subType],
         "sub_id": subId == null ? null : subId,
+        "menu_path_id": menuPathId == null ? null : menuPathId,
     };
 }
 
 class Detail {
-    final String type;
-    final String key;
-    final String value;
-
     Detail({
         this.type,
         this.key,
         this.value,
     });
 
+    String type;
+    String key;
+    String value;
+
     factory Detail.fromJson(Map<String, dynamic> json) => Detail(
-        type: json["type"] == null ? null : json["type"],
-        key: json["key"] == null ? null : json["key"],
-        value: json["value"] == null ? null : json["value"],
+        type: json["type"],
+        key: json["key"],
+        value: json["value"],
     );
 
     Map<String, dynamic> toJson() => {
-        "type": type == null ? null : type,
-        "key": key == null ? null : key,
-        "value": value == null ? null : value,
+        "type": type,
+        "key": key,
+        "value": value,
     };
 }
 
 class Images {
-    final String landscape;
-    final String portrait;
-    final String square;
-    final String landscape43;
-    final String portrait43;
-    final String portraitLogo;
-    final String landscapeLogo;
-    final String marketingSmall;
-    final String marketingMedium;
-    final String marketingLarge;
-    final String marketingTv;
-
     Images({
         this.landscape,
         this.portrait,
@@ -250,6 +274,18 @@ class Images {
         this.marketingLarge,
         this.marketingTv,
     });
+
+    String landscape;
+    String portrait;
+    String square;
+    String landscape43;
+    String portrait43;
+    String portraitLogo;
+    String landscapeLogo;
+    String marketingSmall;
+    String marketingMedium;
+    String marketingLarge;
+    String marketingTv;
 
     factory Images.fromJson(Map<String, dynamic> json) => Images(
         landscape: json["landscape"] == null ? null : json["landscape"],
@@ -280,208 +316,208 @@ class Images {
     };
 }
 
-enum Layout { MULTI, SINGLE }
+enum Layout { SINGLE, MULTI }
 
 final layoutValues = EnumValues({
     "multi": Layout.MULTI,
     "single": Layout.SINGLE
 });
 
-enum ProgramName { PLAYLIST24, RADIO2_SOCIAL_CLUB, TANTO_NON_USCIVO_LO_STESSO }
+enum ProgramName { UNA_PEZZA_DI_LUNDINI, PLAYLIST24 }
 
 final programNameValues = EnumValues({
     "Playlist24": ProgramName.PLAYLIST24,
-    "Radio2 Social Club": ProgramName.RADIO2_SOCIAL_CLUB,
-    "Tanto Non Uscivo Lo Stesso": ProgramName.TANTO_NON_USCIVO_LO_STESSO
+    "Una Pezza di Lundini": ProgramName.UNA_PEZZA_DI_LUNDINI
 });
 
 class RightsManagement {
-    final Rights rights;
-
     RightsManagement({
         this.rights,
     });
 
+    Rights rights;
+
     factory RightsManagement.fromJson(Map<String, dynamic> json) => RightsManagement(
-        rights: json["rights"] == null ? null : Rights.fromJson(json["rights"]),
+        rights: Rights.fromJson(json["rights"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "rights": rights == null ? null : rights.toJson(),
+        "rights": rights.toJson(),
     };
 }
 
 class Rights {
-    final Offline offline;
-    final Geoprotection geoprotection;
-    final Drm drm;
-
     Rights({
         this.offline,
         this.geoprotection,
         this.drm,
     });
 
+    Offline offline;
+    Geoprotection geoprotection;
+    Drm drm;
+
     factory Rights.fromJson(Map<String, dynamic> json) => Rights(
-        offline: json["offline"] == null ? null : Offline.fromJson(json["offline"]),
-        geoprotection: json["geoprotection"] == null ? null : Geoprotection.fromJson(json["geoprotection"]),
+        offline: Offline.fromJson(json["offline"]),
+        geoprotection: Geoprotection.fromJson(json["geoprotection"]),
         drm: json["drm"] == null ? null : Drm.fromJson(json["drm"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "offline": offline == null ? null : offline.toJson(),
-        "geoprotection": geoprotection == null ? null : geoprotection.toJson(),
+        "offline": offline.toJson(),
+        "geoprotection": geoprotection.toJson(),
         "drm": drm == null ? null : drm.toJson(),
     };
 }
 
 class Drm {
-    final bool diretta;
-    final bool vod;
-
     Drm({
         this.diretta,
         this.vod,
     });
 
+    bool diretta;
+    bool vod;
+
     factory Drm.fromJson(Map<String, dynamic> json) => Drm(
-        diretta: json["Diretta"] == null ? null : json["Diretta"],
-        vod: json["VOD"] == null ? null : json["VOD"],
+        diretta: json["Diretta"],
+        vod: json["VOD"],
     );
 
     Map<String, dynamic> toJson() => {
-        "Diretta": diretta == null ? null : diretta,
-        "VOD": vod == null ? null : vod,
+        "Diretta": diretta,
+        "VOD": vod,
     };
 }
 
 class Geoprotection {
-    final bool europe;
-    final bool italy;
-
     Geoprotection({
-        this.europe,
         this.italy,
+        this.europe,
     });
 
+    bool italy;
+    bool europe;
+
     factory Geoprotection.fromJson(Map<String, dynamic> json) => Geoprotection(
-        europe: json["europe"] == null ? null : json["europe"],
         italy: json["italy"] == null ? null : json["italy"],
+        europe: json["europe"] == null ? null : json["europe"],
     );
 
     Map<String, dynamic> toJson() => {
-        "europe": europe == null ? null : europe,
         "italy": italy == null ? null : italy,
+        "europe": europe == null ? null : europe,
     };
 }
 
 class Offline {
-    final bool tablet;
-    final bool web;
-    final bool smartTv;
-    final bool smartphone;
-
     Offline({
-        this.tablet,
         this.web,
-        this.smartTv,
         this.smartphone,
+        this.smartTv,
+        this.tablet,
     });
 
+    bool web;
+    bool smartphone;
+    bool smartTv;
+    bool tablet;
+
     factory Offline.fromJson(Map<String, dynamic> json) => Offline(
-        tablet: json["Tablet"] == null ? null : json["Tablet"],
         web: json["Web"] == null ? null : json["Web"],
-        smartTv: json["Smart Tv"] == null ? null : json["Smart Tv"],
         smartphone: json["Smartphone"] == null ? null : json["Smartphone"],
+        smartTv: json["Smart Tv"] == null ? null : json["Smart Tv"],
+        tablet: json["Tablet"] == null ? null : json["Tablet"],
     );
 
     Map<String, dynamic> toJson() => {
-        "Tablet": tablet == null ? null : tablet,
         "Web": web == null ? null : web,
-        "Smart Tv": smartTv == null ? null : smartTv,
         "Smartphone": smartphone == null ? null : smartphone,
+        "Smart Tv": smartTv == null ? null : smartTv,
+        "Tablet": tablet == null ? null : tablet,
     };
 }
 
-enum Type { RAI_PLAY_PROGRAMMA_ITEM, RAI_PLAY_VIDEO_ITEM, RAI_PLAY_MARKETING_AUTOMATION_ITEM, RAI_PLAY_RACCOLTA_ITEM }
+enum SubType { RAI_PLAY_V2_TIPOLOGIA_PAGE, RAI_PLAY_SPECIALE_PAGE, RAI_PLAY_V2_GENERE_PAGE }
+
+final subTypeValues = EnumValues({
+    "RaiPlay Speciale Page": SubType.RAI_PLAY_SPECIALE_PAGE,
+    "RaiPlay V2 Genere Page": SubType.RAI_PLAY_V2_GENERE_PAGE,
+    "RaiPlay V2 Tipologia Page": SubType.RAI_PLAY_V2_TIPOLOGIA_PAGE
+});
+
+enum Subtitle { ST_2022_UNA_PEZZA_DI_LUNDINI, ST_2022_PLAYLIST24, PLAYLIST24 }
+
+final subtitleValues = EnumValues({
+    "Playlist24": Subtitle.PLAYLIST24,
+    "St 2022 - Playlist24": Subtitle.ST_2022_PLAYLIST24,
+    "St 2022 - Una Pezza di Lundini": Subtitle.ST_2022_UNA_PEZZA_DI_LUNDINI
+});
+
+enum Type { RAI_PLAY_PROGRAMMA_ITEM, RAI_PLAY_VIDEO_ITEM, RAI_PLAY_MARKETING_AUTOMATION_ITEM, RAI_PLAY_RACCOLTA_ITEM, RAI_PLAY_GENERE_ITEM, RAI_PLAY_LINK_ITEM }
 
 final typeValues = EnumValues({
+    "RaiPlay Genere Item": Type.RAI_PLAY_GENERE_ITEM,
+    "RaiPlay Link Item": Type.RAI_PLAY_LINK_ITEM,
     "RaiPlay Marketing Automation Item": Type.RAI_PLAY_MARKETING_AUTOMATION_ITEM,
     "RaiPlay Programma Item": Type.RAI_PLAY_PROGRAMMA_ITEM,
     "RaiPlay Raccolta Item": Type.RAI_PLAY_RACCOLTA_ITEM,
     "RaiPlay Video Item": Type.RAI_PLAY_VIDEO_ITEM
 });
 
-class Info {
-    final String img;
-    final String title;
-    final Description description;
+class Header {
+    Header({
+        this.label,
+        this.weblink,
+        this.pathId,
+        this.subType,
+    });
 
+    String label;
+    String weblink;
+    String pathId;
+    SubType subType;
+
+    factory Header.fromJson(Map<String, dynamic> json) => Header(
+        label: json["label"],
+        weblink: json["weblink"] == null ? null : json["weblink"],
+        pathId: json["path_id"] == null ? null : json["path_id"],
+        subType: json["sub_type"] == null ? null : subTypeValues.map[json["sub_type"]],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "label": label,
+        "weblink": weblink == null ? null : weblink,
+        "path_id": pathId == null ? null : pathId,
+        "sub_type": subType == null ? null : subTypeValues.reverse[subType],
+    };
+}
+
+class Info {
     Info({
         this.img,
         this.title,
         this.description,
     });
 
+    String img;
+    String title;
+    String description;
+
     factory Info.fromJson(Map<String, dynamic> json) => Info(
-        img: json["img"] == null ? null : json["img"],
-        title: json["title"] == null ? null : json["title"],
-        description: json["description"] == null ? null : descriptionValues.map[json["description"]],
+        img: json["img"],
+        title: json["title"],
+        description: json["description"],
     );
 
     Map<String, dynamic> toJson() => {
-        "img": img == null ? null : img,
-        "title": title == null ? null : title,
-        "description": description == null ? null : descriptionValues.reverse[description],
+        "img": img,
+        "title": title,
+        "description": description,
     };
 }
 
-enum Description { QUESTO_IL_CONTINUA_A_GUARDARE, EMPTY, I_PROGRAMMI_CHE_HAI_INSERTO_NELLA_TUA_LISTA }
-
-final descriptionValues = EnumValues({
-    "": Description.EMPTY,
-    "I programmi che hai inserto nella tua lista": Description.I_PROGRAMMI_CHE_HAI_INSERTO_NELLA_TUA_LISTA,
-    "Questo è il continua a guardare": Description.QUESTO_IL_CONTINUA_A_GUARDARE
-});
-
-enum Section { CONTINUA_A_GUARDARE, EMPTY, PREFERITI }
-
-final sectionValues = EnumValues({
-    "Continua a guardare": Section.CONTINUA_A_GUARDARE,
-    "": Section.EMPTY,
-    "Preferiti": Section.PREFERITI
-});
-
 class TrackInfo {
-    final String id;
-    final String domain;
-    final String platform;
-    final String mediaType;
-    final String pageType;
-    final String editor;
-    final String year;
-    final String editYear;
-    final String section;
-    final String subSection;
-    final String content;
-    final String title;
-    final String channel;
-    final DateTime date;
-    final String typology;
-    final dynamic genres;
-    final dynamic subGenres;
-    final String programTitle;
-    final String programTypology;
-    final dynamic programGenres;
-    final dynamic programSubGenres;
-    final String edition;
-    final String season;
-    final String episodeNumber;
-    final String episodeTitle;
-    final String form;
-    final Dfp dfp;
-    final String sasParams;
-
     TrackInfo({
         this.id,
         this.domain,
@@ -497,6 +533,7 @@ class TrackInfo {
         this.title,
         this.channel,
         this.date,
+        this.updateDate,
         this.typology,
         this.genres,
         this.subGenres,
@@ -509,70 +546,110 @@ class TrackInfo {
         this.episodeNumber,
         this.episodeTitle,
         this.form,
+        this.listaDateMo,
+        this.pageUrl,
+        this.nodmp,
         this.dfp,
-        this.sasParams,
     });
 
+    String id;
+    String domain;
+    String platform;
+    String mediaType;
+    String pageType;
+    String editor;
+    String year;
+    String editYear;
+    String section;
+    String subSection;
+    String content;
+    String title;
+    String channel;
+    String date;
+    String updateDate;
+    String typology;
+    List<dynamic> genres;
+    List<dynamic> subGenres;
+    String programTitle;
+    String programTypology;
+    List<dynamic> programGenres;
+    List<dynamic> programSubGenres;
+    String edition;
+    String season;
+    String episodeNumber;
+    String episodeTitle;
+    String form;
+    List<dynamic> listaDateMo;
+    String pageUrl;
+    bool nodmp;
+    Dfp dfp;
+
     factory TrackInfo.fromJson(Map<String, dynamic> json) => TrackInfo(
-        id: json["id"] == null ? null : json["id"],
-        domain: json["domain"] == null ? null : json["domain"],
-        platform: json["platform"] == null ? null : json["platform"],
-        mediaType: json["media_type"] == null ? null : json["media_type"],
-        pageType: json["page_type"] == null ? null : json["page_type"],
-        editor: json["editor"] == null ? null : json["editor"],
-        year: json["year"] == null ? null : json["year"],
-        editYear: json["edit_year"] == null ? null : json["edit_year"],
-        section: json["section"] == null ? null : json["section"],
-        subSection: json["sub_section"] == null ? null : json["sub_section"],
-        content: json["content"] == null ? null : json["content"],
-        title: json["title"] == null ? null : json["title"],
-        channel: json["channel"] == null ? null : json["channel"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        typology: json["typology"] == null ? null : json["typology"],
-        genres: json["genres"],
-        subGenres: json["sub_genres"],
-        programTitle: json["program_title"] == null ? null : json["program_title"],
-        programTypology: json["program_typology"] == null ? null : json["program_typology"],
-        programGenres: json["program_genres"],
-        programSubGenres: json["program_sub_genres"],
-        edition: json["edition"] == null ? null : json["edition"],
-        season: json["season"] == null ? null : json["season"],
-        episodeNumber: json["episode_number"] == null ? null : json["episode_number"],
-        episodeTitle: json["episode_title"] == null ? null : json["episode_title"],
-        form: json["form"] == null ? null : json["form"],
-        dfp: json["dfp"] == null ? null : Dfp.fromJson(json["dfp"]),
-        sasParams: json["sas_params"] == null ? null : json["sas_params"],
+        id: json["id"],
+        domain: json["domain"],
+        platform: json["platform"],
+        mediaType: json["media_type"],
+        pageType: json["page_type"],
+        editor: json["editor"],
+        year: json["year"],
+        editYear: json["edit_year"],
+        section: json["section"],
+        subSection: json["sub_section"],
+        content: json["content"],
+        title: json["title"],
+        channel: json["channel"],
+        date: json["date"],
+        updateDate: json["update_date"],
+        typology: json["typology"],
+        genres: List<dynamic>.from(json["genres"].map((x) => x)),
+        subGenres: List<dynamic>.from(json["sub_genres"].map((x) => x)),
+        programTitle: json["program_title"],
+        programTypology: json["program_typology"],
+        programGenres: List<dynamic>.from(json["program_genres"].map((x) => x)),
+        programSubGenres: List<dynamic>.from(json["program_sub_genres"].map((x) => x)),
+        edition: json["edition"],
+        season: json["season"],
+        episodeNumber: json["episode_number"],
+        episodeTitle: json["episode_title"],
+        form: json["form"],
+        listaDateMo: List<dynamic>.from(json["listaDateMo"].map((x) => x)),
+        pageUrl: json["page_url"],
+        nodmp: json["nodmp"],
+        dfp: Dfp.fromJson(json["dfp"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "domain": domain == null ? null : domain,
-        "platform": platform == null ? null : platform,
-        "media_type": mediaType == null ? null : mediaType,
-        "page_type": pageType == null ? null : pageType,
-        "editor": editor == null ? null : editor,
-        "year": year == null ? null : year,
-        "edit_year": editYear == null ? null : editYear,
-        "section": section == null ? null : section,
-        "sub_section": subSection == null ? null : subSection,
-        "content": content == null ? null : content,
-        "title": title == null ? null : title,
-        "channel": channel == null ? null : channel,
-        "date": date == null ? null : "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-        "typology": typology == null ? null : typology,
-        "genres": genres,
-        "sub_genres": subGenres,
-        "program_title": programTitle == null ? null : programTitle,
-        "program_typology": programTypology == null ? null : programTypology,
-        "program_genres": programGenres,
-        "program_sub_genres": programSubGenres,
-        "edition": edition == null ? null : edition,
-        "season": season == null ? null : season,
-        "episode_number": episodeNumber == null ? null : episodeNumber,
-        "episode_title": episodeTitle == null ? null : episodeTitle,
-        "form": form == null ? null : form,
-        "dfp": dfp == null ? null : dfp.toJson(),
-        "sas_params": sasParams == null ? null : sasParams,
+        "id": id,
+        "domain": domain,
+        "platform": platform,
+        "media_type": mediaType,
+        "page_type": pageType,
+        "editor": editor,
+        "year": year,
+        "edit_year": editYear,
+        "section": section,
+        "sub_section": subSection,
+        "content": content,
+        "title": title,
+        "channel": channel,
+        "date": date,
+        "update_date": updateDate,
+        "typology": typology,
+        "genres": List<dynamic>.from(genres.map((x) => x)),
+        "sub_genres": List<dynamic>.from(subGenres.map((x) => x)),
+        "program_title": programTitle,
+        "program_typology": programTypology,
+        "program_genres": List<dynamic>.from(programGenres.map((x) => x)),
+        "program_sub_genres": List<dynamic>.from(programSubGenres.map((x) => x)),
+        "edition": edition,
+        "season": season,
+        "episode_number": episodeNumber,
+        "episode_title": episodeTitle,
+        "form": form,
+        "listaDateMo": List<dynamic>.from(listaDateMo.map((x) => x)),
+        "page_url": pageUrl,
+        "nodmp": nodmp,
+        "dfp": dfp.toJson(),
     };
 }
 
